@@ -1,4 +1,3 @@
-
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import RGL, { WidthProvider } from 'react-grid-layout';
 import useDashboardStore from '../../store/dashboardStore';
@@ -82,6 +81,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout }) => {
           isDraggable={role === 'editor'}
           isResizable={role === 'editor'}
           draggableHandle=".drag-handle"
+          draggableCancel=".widget-action-button"
         >
           {activeDashboard.widgets.map(widget => (
             <div key={widget.id} data-grid={widget.gridItem} className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">

@@ -8,7 +8,7 @@ interface State {
   hasError: boolean;
 }
 
-// FIX: Changed to extend React.Component directly to ensure correct inheritance and make `this.props` available.
+// FIX: The class must extend React.Component to be a valid React component and have access to `this.props`.
 class ErrorBoundary extends React.Component<Props, State> {
   public state: State = {
     hasError: false
