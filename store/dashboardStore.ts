@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { produce } from 'immer';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -196,20 +195,26 @@ const useDashboardStore = create<AppState & AppActions>()(
     {
       name: 'dashboard-storage',
       storage: createJSONStorage(() => localStorage),
-      onRehydrate: (state) => {
+      partialize: (state) => ({
+        dashboards: state.dashboards,
+        activeDashboardId: state.activeDashboardId
+      }),
+      onRehydrateStorage: () => (state, error) => {
         if (state) {
+          // If state is loaded from storage and contains dashboards,
+          // we sync the history and mark the store as initialized.
+          if (state.dashboards && state.dashboards.length > 0) {
             state.history = {
               past: [],
               present: state.dashboards,
               future: []
             };
             state.isInitialized = true;
+          }
+          // If storage is empty, isInitialized remains false,
+          // allowing setInitialState to populate the default dashboard.
         }
       },
-      partialize: (state) => ({
-        dashboards: state.dashboards,
-        activeDashboardId: state.activeDashboardId
-      }),
     }
   )
 );

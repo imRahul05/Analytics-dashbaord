@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUsersData, UsersData } from '../../services/mockApiService';
@@ -30,8 +31,9 @@ const UsersTableWidget: React.FC<UsersTableWidgetProps> = ({ config }) => {
   if (isLoading) return <div className="flex items-center justify-center h-full"><Spinner /></div>;
   if (isError) return <div className="text-red-400">Error: {error.message}</div>;
 
-  // FIX: Provide a fallback empty array to `new Set()` to prevent type inference issues when `data` is undefined. This ensures `statuses` is correctly typed as `string[]`.
-  const statuses = ['All', ...Array.from(new Set(data?.map(u => u.status) || []))];
+  // FIX: Explicitly setting the generic type for `Set` to `<string>` helps TypeScript correctly
+  // infer the array type, resolving the 'unknown' type error for the mapped options.
+  const statuses = ['All', ...new Set<string>(data?.map(u => u.status) || [])];
 
   return (
     <div className="flex flex-col h-full">

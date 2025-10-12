@@ -1,3 +1,4 @@
+
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import RGL, { WidthProvider } from 'react-grid-layout';
 import useDashboardStore from '../../store/dashboardStore';
@@ -88,7 +89,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout }) => {
               <ErrorBoundary>
                 <Widget widget={widget} isEditor={role === 'editor'}>
                   <Suspense fallback={<div className="flex items-center justify-center h-full"><Spinner /></div>}>
-                    {React.createElement(WIDGET_MAP[widget.type], { config: widget.config, updateConfig: () => {} })}
+                    {/* FIX: Removed unsupported `updateConfig` prop. The widget components do not accept this prop, causing an overload error. */}
+                    {React.createElement(WIDGET_MAP[widget.type], { config: widget.config })}
                   </Suspense>
                 </Widget>
               </ErrorBoundary>
