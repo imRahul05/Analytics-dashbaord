@@ -1,0 +1,5 @@
+{
+  "name": "React Analytics Dashboard",
+  "description": "A customizable analytics dashboard application built with React, TypeScript, and Tailwind CSS. Features include draggable and resizable widgets, multiple dashboards, widget configuration, and mock data integration.",
+  "requestFramePermissions": []
+}
